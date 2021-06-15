@@ -1,5 +1,5 @@
 """
-XOR - encryption
+XOR - cipher
 
 References:
 [1] https://en.wikipedia.org/wiki/Linear_congruential_generator
@@ -13,11 +13,10 @@ from argparse import ArgumentParser
 # TODO add shuffling
 
 
-def lcg() -> Generator[int, None, None]:
+def lcg(seed: int) -> Generator[int, None, None]:
     """Linear congruential generator.
     """
     # Values taken from page 5 at [2]
-    seed: int = 42
     m: int = (2 ** 14) - 3
     a: int = 3_007
     c: int = 0
@@ -37,12 +36,12 @@ def save_file(content: bytes, filename: Path) -> None:
         return f.write(content)
 
 
-def encrypt_or_decrypt(args):
+def xor_cipher(args):
     content_in = load_file(args.input_file)
 
     content_out = bytearray([
         msg ^ (key % 256)
-        for msg, key in zip(content_in, lcg())
+        for msg, key in zip(content_in, lcg(len(content_in)))
     ])
 
     save_file(content_out, args.output_file)
@@ -53,4 +52,4 @@ if __name__ == "__main__":
     parser.add_argument("--input_file", type=Path)
     parser.add_argument("--output_file", type=Path)
     args = parser.parse_args()
-    encrypt_or_decrypt(args)
+    xor_cipher(args)

@@ -1,7 +1,7 @@
 ## Bisonai Security
 
 This repository contains techniques for encryption and decryption of machine learning models.
-Machine learning models deployed on mobile devices are vulnerable without a proper encryption techniques.
+Machine learning models deployed on mobile devices are vulnerable to a theft without a proper encryption techniques.
 
 ### Pseudo-random generator
 
@@ -16,7 +16,7 @@ https://en.wikipedia.org/wiki/XOR_cipher
 
 ### Example Usage
 
-```python
+```bash
 python3 security.py \
     --input_file README.md \
     --output_file README_enc.md
