@@ -29,3 +29,9 @@ python3 security.py \
 
 diff README.md README_dec.md
 ```
+
+## Unit tests
+
+```python
+python -m unittest test_security
+```

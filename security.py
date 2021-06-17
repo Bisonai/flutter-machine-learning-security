@@ -42,9 +42,9 @@ def load_file(filename: Path) -> bytes:
         return f.read()
 
 
-def save_file(content: bytes, filename: Path) -> None:
+def save_file(content: List, filename: Path) -> None:
     with open(filename, "wb") as f:
-        return f.write(content)
+        return f.write(bytearray(content))
 
 
 def shuffle(arr: bytearray, encrypt: bool) -> List:
@@ -65,21 +65,25 @@ def shuffle(arr: bytearray, encrypt: bool) -> List:
     return [arr[i] for i, _ in shuffled_pairs]
 
 
-def xor_cipher(args):
-    content_in = load_file(args.input_file)
+def xor_cipher(
+    input_file: Path,
+    output_file: Path,
+    encrypt: bool,
+):
+    content_in = load_file(input_file)
 
-    if args.encrypt:
-        content_in = shuffle(content_in, args.encrypt)
+    if encrypt:
+        content_in = shuffle(content_in, encrypt)
 
-    content_out = bytearray([
+    content_out = [
         msg ^ (key % 256)
         for msg, key in zip(content_in, lcg(len(content_in), XOR_KEY))
-    ])
+    ]
 
-    if not args.encrypt:
-        content_out = bytearray(shuffle(content_out, args.encrypt))
+    if not encrypt:
+        content_out = shuffle(content_out, encrypt)
 
-    save_file(content_out, args.output_file)
+    save_file(content_out, output_file)
 
 
 if __name__ == "__main__":
@@ -89,4 +93,9 @@ if __name__ == "__main__":
     parser.add_argument("--encrypt", dest="encrypt", action="store_true")
     parser.add_argument("--decrypt", dest="encrypt", action="store_false")
     args = parser.parse_args()
-    xor_cipher(args)
+
+    xor_cipher(
+        args.input_file,
+        args.output_file,
+        args.encrypt,
+    )
