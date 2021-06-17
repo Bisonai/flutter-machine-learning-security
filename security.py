@@ -10,6 +10,7 @@ from typing import (
     Dict,
     Generator,
     List,
+    Tuple,
 )
 from pathlib import Path
 from argparse import ArgumentParser
@@ -37,53 +38,109 @@ def lcg(seed: int, key: Dict[str, int]) -> Generator[int, None, None]:
         yield seed
 
 
-def load_file(filename: Path) -> bytes:
+def load_file(filename: Path) -> List[int]:
     with open(filename, "rb") as f:
-        return f.read()
+        return list(f.read())
 
 
-def save_file(content: List, filename: Path) -> None:
+def save_file(message: List[int], filename: Path) -> None:
     with open(filename, "wb") as f:
-        return f.write(bytearray(content))
+        f.write(bytearray(message))
 
 
-def shuffle(arr: bytearray, encrypt: bool) -> List:
-    len_arr = len(arr)
-    pairs = [
-        (idx, r)
-        for idx, r in zip(range(len_arr), lcg(len_arr, SHUFFLE_KEY))
+def generate_shuffled_pairs(len_msg: int) -> List[Tuple[int, int]]:
+    """Generate pairs of number consisting of an increasing sequence
+    of numbers and pseudo-randomly generated numbers. Sort pairs based
+    on the pseudo-random numbers.
+
+    Before shuffling
+    | i |  r |
+    |---+----|
+    | 0 | 10 |
+    | 1 |  7 |
+    | 2 | 33 |
+    | 4 | 12 |
+
+    After shuffling
+    | i |  r |
+    |---+----|
+    | 1 |  7 |
+    | 0 | 10 |
+    | 4 | 12 |
+    | 2 | 33 |
+    """
+    return sorted(
+        [
+            (i, r)
+            for i, r in zip(range(len_msg), lcg(len_msg, SHUFFLE_KEY))
+        ],
+        key=lambda p: p[1],
+    )
+
+
+def generate_decryption_shuffle_pairs(len_msg: int, shuffled_pairs: List[int]) -> List[Tuple[int, int]]:
+    """
+    Shuffled pairs
+    | i |  r |
+    |---+----|
+    | 1 |  7 |
+    | 0 | 10 |
+    | 4 | 12 |
+    | 2 | 33 |
+    """
+    return sorted(
+        [
+            (i, r)
+            for i, r in zip(range(len_msg), [p[0] for p in shuffled_pairs])
+        ],
+        key=lambda p: p[1],
+    )
+
+
+def compose_message(message: List[int], pairs: List[Tuple[int, int]]):
+    return [message[p[0]] for p in pairs]
+
+
+def shuffle_encrypt(message: List[int]) -> List[int]:
+    len_msg = len(message)
+    shuffled_pairs = generate_shuffled_pairs(len_msg)
+    return compose_message(message, shuffled_pairs)
+
+
+def shuffle_decrypt(message: List[int]) -> List[int]:
+    len_msg = len(message)
+    shuffled_pairs = generate_shuffled_pairs(len_msg)
+    decryption_shuffle_pairs = generate_decryption_shuffle_pairs(
+        len_msg,
+        shuffled_pairs,
+    )
+    return compose_message(message, decryption_shuffle_pairs)
+
+
+def xor_cipher(message: List[int]) -> List[int]:
+    return [
+        msg ^ (key % 256)
+        for msg, key in zip(message, lcg(len(message), XOR_KEY))
     ]
-    shuffled_pairs = sorted(pairs, key=lambda x: x[1])
-
-    if not encrypt:
-        pairs = [
-            (idx, r)
-            for idx, r in zip(range(len_arr), [s for s, _ in shuffled_pairs])
-        ]
-        shuffled_pairs = sorted(pairs, key=lambda x: x[1])
-
-    return [arr[i] for i, _ in shuffled_pairs]
 
 
-def xor_cipher(
+def xor_cipher_shuffle(
     input_file: Path,
     output_file: Path,
     encrypt: bool,
 ):
-    content_in = load_file(input_file)
+    decrypt = not encrypt
+    message_in = load_file(input_file)
 
     if encrypt:
-        content_in = shuffle(content_in, encrypt)
+        message_in = shuffle_encrypt(message_in)
 
-    content_out = [
-        msg ^ (key % 256)
-        for msg, key in zip(content_in, lcg(len(content_in), XOR_KEY))
-    ]
+    message_out = xor_cipher(message_in)
 
-    if not encrypt:
-        content_out = shuffle(content_out, encrypt)
+    if decrypt:
+        message_out = shuffle_decrypt(message_out)
 
-    save_file(content_out, output_file)
+    save_file(message_out, output_file)
 
 
 if __name__ == "__main__":
@@ -94,7 +151,7 @@ if __name__ == "__main__":
     parser.add_argument("--decrypt", dest="encrypt", action="store_false")
     args = parser.parse_args()
 
-    xor_cipher(
+    xor_cipher_shuffle(
         args.input_file,
         args.output_file,
         args.encrypt,
