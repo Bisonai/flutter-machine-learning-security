@@ -18,10 +18,12 @@ https://en.wikipedia.org/wiki/XOR_cipher
 
 ```bash
 python3 security.py \
+    --encrypt \
     --input_file README.md \
     --output_file README_enc.md
 
 python3 security.py \
+    --decrypt \
     --input_file README_enc.md \
     --output_file README_dec.md
 
