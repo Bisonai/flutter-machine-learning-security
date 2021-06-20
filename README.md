@@ -3,6 +3,8 @@
 This repository contains techniques for encryption and decryption of machine learning models.
 Machine learning models deployed on mobile devices are vulnerable to a theft without a proper encryption techniques.
 
+Flutter Bisonai Security plugin is located inside plugin directory.
+
 ### Pseudo-random generator
 
 https://en.wikipedia.org/wiki/Linear_congruential_generator
@@ -33,5 +35,18 @@ diff README.md README_dec.md
 ## Unit tests
 
 ```python
-python -m unittest test_security
+python -m unittest security_test
+```
+
+
+## Flutter plugin
+
+### Test
+
+```bash
+cd plugin/test
+mkdir build && cd build
+cmake ..
+make
+./BisonaiSecurityTest
 ```
