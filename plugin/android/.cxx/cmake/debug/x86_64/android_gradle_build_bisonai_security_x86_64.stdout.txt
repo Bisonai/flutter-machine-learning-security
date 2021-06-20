@@ -1,0 +1,3 @@
+ninja: Entering directory `/home/martin/git/security/plugin/android/.cxx/cmake/debug/x86_64'
+[1/2] Building CXX object CMakeFiles/bisonai_security.dir/home/martin/git/security/plugin/ios/Classes/xor_cipher_shuffle.cc.o
+[2/2] Linking CXX shared library /home/martin/git/security/plugin/example/build/bisonai_security/intermediates/cmake/debug/obj/x86_64/libbisonai_security.so
