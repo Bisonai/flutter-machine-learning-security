@@ -78,7 +78,7 @@ def generate_shuffled_pairs(len_msg: int) -> List[Tuple[int, int]]:
     )
 
 
-def generate_decryption_shuffle_pairs(len_msg: int, shuffled_pairs: List[int]) -> List[Tuple[int, int]]:
+def generate_decryption_shuffle_pairs(len_msg: int, shuffled_pairs: List[Tuple[int, int]]) -> List[Tuple[int, int]]:
     """
     Shuffled pairs
     | i |  r |
