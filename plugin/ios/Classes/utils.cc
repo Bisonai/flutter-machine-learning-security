@@ -26,12 +26,7 @@ public:
 };
 
 
-std::vector<unsigned char> xor_cipher(
-    std::vector<unsigned char> message,
-    int a,
-    int c,
-    int m
-    ) {
+std::vector<unsigned char> xor_cipher(std::vector<unsigned char> message, int a, int c, int m) {
     std::vector<unsigned char> message_enc;
 
     auto msg_size = message.size();
@@ -51,9 +46,7 @@ std::vector<unsigned char> load_file(std::string filePath) {
     return buffer;
 }
 
-bool sortbysec(
-    const std::pair<int,int> &a,
-    const std::pair<int,int> &b)
+bool sortbysec(const std::pair<int,int> &a, const std::pair<int,int> &b)
 {
     return (a.second < b.second);
 }
@@ -70,12 +63,7 @@ std::vector<unsigned char> compose_message(std::vector<unsigned char> message, s
     return new_message;
 }
 
-std::vector<std::pair<int,int>> generate_shuffled_pairs(
-    int msg_len,
-    int a,
-    int c,
-    int m
-    ) {
+std::vector<std::pair<int,int>> generate_shuffled_pairs(int msg_len, int a, int c, int m) {
     std::vector<std::pair<int,int>> shuffled_pairs;
     auto lcg = LCG(a, c, m, msg_len);
 
@@ -100,12 +88,7 @@ std::vector<std::pair<int,int>> generate_decryption_shuffle_pairs(int msg_len, s
     return shuffled_pairs;
 }
 
-std::vector<unsigned char> shuffle_encrypt(
-    std::vector<unsigned char> message,
-    int a,
-    int c,
-    int m
-    ) {
+std::vector<unsigned char> shuffle_encrypt(std::vector<unsigned char> message, int a, int c, int m) {
     auto shuffled_pairs = generate_shuffled_pairs(
         message.size(),
         a,
@@ -114,12 +97,7 @@ std::vector<unsigned char> shuffle_encrypt(
     return compose_message(message, shuffled_pairs);
 }
 
-std::vector<unsigned char> shuffle_decrypt(
-    std::vector<unsigned char> message,
-    int a,
-    int c,
-    int m
-    ) {
+std::vector<unsigned char> shuffle_decrypt(std::vector<unsigned char> message, int a, int c, int m) {
     auto msg_len = message.size();
     auto shuffled_pairs = generate_shuffled_pairs(
         msg_len,
@@ -138,7 +116,8 @@ std::vector<unsigned char> xor_decipher_shuffle(
     int a_shuffle,
     int c_shuffle,
     int m_shuffle
-    ) {
+    )
+{
     auto message_enc_shuffled = load_file(file);
     auto message_shuffled = xor_cipher(
         message_enc_shuffled,
