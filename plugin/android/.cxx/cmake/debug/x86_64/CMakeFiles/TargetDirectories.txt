@@ -1,3 +1,0 @@
-/home/martin/git/security/plugin/android/.cxx/cmake/debug/x86_64/CMakeFiles/rebuild_cache.dir
-/home/martin/git/security/plugin/android/.cxx/cmake/debug/x86_64/CMakeFiles/edit_cache.dir
-/home/martin/git/security/plugin/android/.cxx/cmake/debug/x86_64/CMakeFiles/bisonai_security.dir

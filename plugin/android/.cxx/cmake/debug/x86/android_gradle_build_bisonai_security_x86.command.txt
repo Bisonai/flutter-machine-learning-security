@@ -1,7 +1,0 @@
-Executable : /home/martin/Android/Sdk/cmake/3.10.2.4988404/bin/ninja
-arguments : 
--C
-/home/martin/git/security/plugin/android/.cxx/cmake/debug/x86
-bisonai_security
-jvmArgs : 
-
