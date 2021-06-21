@@ -1,4 +1,4 @@
-# bisonai_security_example
+# Bisonai Security Example
 
 Demonstrates how to use the bisonai_security plugin.
 
