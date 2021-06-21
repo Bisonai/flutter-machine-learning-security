@@ -140,7 +140,7 @@ bool compare_messages(std::vector<unsigned char> a, std::vector<unsigned char> b
         return false;
     }
 
-    for (auto i = 0; i < a.size(); ++i) {
+    for (std::size_t i = 0; i < a.size(); ++i) {
         if (a.at(i) != b.at(i)) {
             std::cout << "FAIL" << std::endl;
             return false;
