@@ -1,4 +1,4 @@
-# Bisonai Security Example
+# Flutter Machine Learning Security Example
 
 Demonstrates how to use the bisonai_security plugin.
 
