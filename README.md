@@ -44,5 +44,5 @@ make
 ## Resources
 
 * https://en.wikipedia.org/wiki/Linear_congruential_generator
-* https://citeseerx.ist.psu.edu/viewdoc/download;jsessionid=37999C8E99C9D0F67EF7E6F714AF8065?doi=10.1.1.34.1024&rep=rep1&type=pdf
+* TABLES OF LINEAR CONGRUENTIAL GENERATORS OF DIFFERENT SIZES AND GOOD LATTICE STRUCTURE https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.34.1024&rep=rep1&type=pdf
 * https://en.wikipedia.org/wiki/XOR_cipher

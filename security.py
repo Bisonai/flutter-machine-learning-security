@@ -3,7 +3,7 @@ XOR - cipher
 
 References:
 [1] https://en.wikipedia.org/wiki/Linear_congruential_generator
-[2] https://citeseerx.ist.psu.edu/viewdoc/download;jsessionid=37999C8E99C9D0F67EF7E6F714AF8065?doi=10.1.1.34.1024&rep=rep1&type=pdf
+[2] https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.34.1024&rep=rep1&type=pdf
 [3] https://en.wikipedia.org/wiki/XOR_cipher
 """
 from typing import (
