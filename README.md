@@ -1,4 +1,4 @@
-## Flutter Machine Learning Security
+# Flutter Machine Learning Security
 
 This repository contains techniques for encryption and decryption of machine learning models.
 Machine learning models deployed on mobile devices are vulnerable to a theft without a proper encryption techniques.
@@ -6,7 +6,7 @@ Machine learning models deployed on mobile devices are vulnerable to a theft wit
 Flutter Bisonai Security plugin is located inside plugin directory.
 
 
-### Example Usage
+## Example Usage
 
 ```bash
 python3 security.py \
